@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sovrano · Informativa privacy</title>
+<meta name="description" content="Informativa sulla privacy del gioco Sovrano per Android e browser.">
+<meta name="robots" content="index, follow">
+<!--
+  22 settembre 2026, casella Pubblicazione. La pagina che Google Play chiede come
+  «URL dell'informativa sulla privacy». Si pubblica cosi' com'e' (un file solo, nessuna
+  risorsa esterna, nessun cookie) dove Gio dice di si'.
+
+  Titolare ed e-mail dati da Gio il 22 settembre 2026 (sono gli stessi della scheda dello
+  store): Giorgio Cristea, sviluppatore «Qublo» su Play, giorgiocreazione@gmail.com.
+
+  Ogni frase e' letta nel codice il 22 settembre 2026:
+  - salvataggio solo sul telefono: src/js/04-state.js (localStorage);
+  - Ambasciata con la rete SPENTA di default: src/js/63-rete.js (VOCE_RETE.attiva=false);
+    il servizio di mezzo tools/voce-proxy.mjs manda il testo a fal.ai (openrouter/router,
+    modello anthropic/claude-haiku-4.5) e registra in voce-log.jsonl la RISPOSTA, la
+    nazione e i consumi, non il testo del giocatore;
+  - «Con un amico»: src/js/68-ponte.js (codice casuale di 16 cifre esadecimali e il nome
+    del Sovrano), server/ (la stanza si salva su disco finche' esiste);
+  - nessuna pubblicita', nessuna analitica, nessun SDK di terzi, nessun permesso Android
+    oltre a Internet. Acquisti (src/js/74-acquisti.js) e video a premio (src/js/75-video.js)
+    sono spenti al primo rilascio e il loro codice di Google non e' nel pacchetto.
+  QUANDO SI ACCENDONO (RILASCIO.md 0.6):
+  - acquisti: togliere il commento alla sezione «acquisti» (italiano e inglese). Le lettere
+    mandano al server della voce il gettone d'acquisto e un codice casuale del telefono;
+  - video: togliere il commento alla sezione «video» e sostituire, in italiano e in inglese,
+    la frase «In breve» e le prime due voci di «Quello che il gioco non fa» coi testi pronti
+    dentro il commento del video. Il modulo del consenso europeo e' quello di Google (UMP),
+    impostato nell'account AdMob.
+  Se una di queste cose cambia nel gioco, questa pagina va cambiata PRIMA del pacchetto.
+-->
+<style>
+  :root{
+    --fondo:#0b1017; --carta:#121a24; --testo:#e9e2d0; --tenue:#a9a28f;
+    --ottone:#c9a45c; --riga:#2a3441;
+  }
+  @media (prefers-color-scheme: light){
+    :root:not([data-theme="dark"]){
+      --fondo:#f4efe3; --carta:#fbf8f1; --testo:#1d2430; --tenue:#5b5647;
+      --ottone:#8a6a24; --riga:#ddd3bd;
+    }
+  }
+  *{ box-sizing:border-box; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    margin:0; background:var(--fondo); color:var(--testo);
+    font:17px/1.6 Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+  }
+  main{ max-width:720px; margin:0 auto; padding:40px 16px 64px; }
+  header{ border-bottom:1px solid var(--riga); padding-bottom:20px; margin-bottom:28px; }
+  .marchio{
+    font:600 13px/1 "Trebuchet MS", system-ui, sans-serif; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--ottone); margin:0 0 12px;
+  }
+  h1{ font-size:30px; line-height:1.2; margin:0 0 8px; font-weight:600; }
+  h2{
+    font:600 14px/1.3 "Trebuchet MS", system-ui, sans-serif; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--ottone); margin:36px 0 10px;
+  }
+  p, li{ margin:0 0 12px; }
+  ul{ padding-left:20px; margin:0 0 12px; }
+  .data{ color:var(--tenue); font-size:15px; margin:0; }
+  .riquadro{
+    background:var(--carta); border:1px solid var(--riga); border-left:3px solid var(--ottone);
+    padding:16px 18px; margin:0 0 16px; border-radius:2px;
+  }
+  .riquadro p:last-child{ margin-bottom:0; }
+  a{ color:var(--ottone); }
+  nav.lingue{ font:15px/1 "Trebuchet MS", system-ui, sans-serif; margin-top:14px; }
+  hr{ border:0; border-top:1px solid var(--riga); margin:56px 0 0; }
+  footer{ color:var(--tenue); font-size:14px; margin-top:20px; }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="marchio">Sovrano</p>
+  <h1>Informativa sulla privacy</h1>
+  <p class="data">Ultimo aggiornamento: 22 settembre 2026</p>
+  <nav class="lingue"><a href="#en" lang="en">English version below</a></nav>
+</header>
+
+<div class="riquadro">
+  <p><strong>In breve.</strong> Sovrano non ha account, pubblicità né strumenti di analisi, e la partita resta sul tuo telefono. Qualcosa esce dal telefono solo se usi una delle due funzioni in rete descritte qui sotto, e solo quello che serve a farle funzionare.</p>
+</div>
+
+<h2>Chi è il titolare</h2>
+<p>Sovrano è un gioco sviluppato da Giorgio Cristea, che lo pubblica con il nome Qublo ed è il titolare del trattamento dei dati descritti in questa pagina. Per qualsiasi domanda o richiesta scrivi a <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>.</p>
+
+<h2>Quello che il gioco non fa</h2>
+<ul>
+  <li>Non chiede di registrarti e non ha account.</li>
+  <li>Non mostra pubblicità e non contiene strumenti di analisi o di tracciamento di terze parti.</li>
+  <li>Non chiede accesso a posizione, contatti, fotocamera, microfono o file. L'unico permesso Android è la connessione a Internet, che serve solo alle due funzioni in rete.</li>
+  <li>Non vende né cede dati a nessuno.</li>
+</ul>
+
+<h2>La partita salvata</h2>
+<p>La partita si salva automaticamente nella memoria del telefono (o del browser, se giochi dal web). Non viene mai inviata a noi. Se disinstalli il gioco, o cancelli i dati del browser, il salvataggio sparisce.</p>
+
+<!-- DA ACCENDERE CON GLI ACQUISTI (dopo il primo rilascio, RILASCIO.md 0.6): togliere il commento
+<h2>Gli acquisti nel gioco</h2>
+<p>Il gioco è gratis per intero. Dentro l'app si possono comprare con Google Play contenuti in più (scenari, stili, la tua nazione, il Consigliere, la stanza grande) e pacchetti di lettere per scrivere alle nazioni con l'intelligenza artificiale. Il pagamento lo gestisce Google: carta, conto e dati di fatturazione li tratta Google secondo la sua informativa, e a noi non arrivano. Sul telefono il gioco tiene quali contenuti hai comprato e il numero d'ordine che Google gli restituisce, per riconoscerli anche senza rete.</p>
+<p>Solo per le lettere il gioco manda al nostro server il gettone d'acquisto che Google gli restituisce e un codice casuale creato sul telefono, non collegato alla tua identità: il server controlla con Google che l'acquisto sia pagato e tiene il conto delle lettere che ti restano, legato a quel codice. Se cambi telefono o disinstalli il gioco il codice si perde: scrivici col numero d'ordine di Google e ti ridiamo le lettere che non avevi usato.</p>
+-->
+
+<!-- DA ACCENDERE COL VIDEO A PREMIO (dopo il primo rilascio, RILASCIO.md 0.6): togliere il commento
+     e mettere al posto delle frasi di adesso:
+     In breve: «Sovrano non ha account né strumenti di analisi, e la partita resta sul tuo telefono. L'unica pubblicità è un video che puoi scegliere di guardare quando perdi, per avere un'altra possibilità. Qualcosa esce dal telefono solo se usi una delle funzioni in rete descritte qui sotto, e solo quello che serve a farle funzionare.»
+     Prima voce: «Non mostra pubblicità se non la chiedi tu: niente banner e niente video che partono da soli. Non contiene strumenti di analisi.»
+     Seconda voce: «Non chiede accesso a posizione, contatti, fotocamera, microfono o file. I permessi Android sono la connessione a Internet e l'identificativo pubblicitario, che usa Google solo per i video a premio.»
+<h2>I video a premio</h2>
+<p>Quando perdi la partita (un voto, una rivoluzione, un colpo di stato) il gioco può offrirti un'altra possibilità in cambio di un video pubblicitario, al massimo due volte per partita. Il video parte solo se lo scegli tu: in nessun altro momento del gioco c'è pubblicità.</p>
+<p>I video li fornisce Google con AdMob. Quando ne guardi uno, il componente di Google raccoglie dal telefono l'identificativo pubblicitario, informazioni sul dispositivo, l'indirizzo IP (da cui ricava una posizione approssimativa) e come interagisci col video, per mostrarlo, misurarlo e prevenire le frodi, secondo la sua informativa (<a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>). A noi non arriva nessuno di questi dati: Google ci dice solo quanti video sono stati visti.</p>
+<p>Nello Spazio economico europeo, nel Regno Unito e in Svizzera, la prima volta che scegli un video Google ti chiede il consenso con un suo modulo. Se non lo dai vedi video non personalizzati, e l'altra possibilità resta. Puoi cambiare la scelta quando vuoi dalla riga «Scelte sulla pubblicità» nel menu del gioco, e azzerare l'identificativo pubblicitario dalle impostazioni di Android. Per questi dati la base giuridica è il tuo consenso, dove la legge lo chiede.</p>
+-->
+
+<h2>Se giochi dal browser</h2>
+<p>La versione web è la stessa pagina del gioco, ospitata dal sito da cui la apri (per esempio itch.io, che ha una sua informativa). Per i caratteri tipografici la pagina si collega a Google Fonts, che come per qualunque sito riceve l'indirizzo IP del tuo dispositivo. L'app per Android ha i caratteri dentro e non si collega a nessuno.</p>
+
+<h2>Funzione in rete 1: la voce dell'Ambasciata</h2>
+<p>È spenta finché non la accendi tu dal menu del gioco. Senza di lei le nazioni rispondono comunque, con frasi che il gioco compone da sé senza rete.</p>
+<p>Se la accendi, quando scrivi di tuo pugno a una nazione il gioco manda al nostro server il tuo messaggio, la conversazione in corso e una descrizione della situazione della partita (la nazione, i suoi numeri, i rapporti fra voi). Il server gira questi dati a un servizio di intelligenza artificiale che compone la risposta: oggi fal.ai, che usa un modello linguistico di Anthropic tramite OpenRouter. Non viene inviato nessun tuo nome, identificativo del telefono o dell'account.</p>
+<p>Il nostro server conserva un registro delle risposte generate, della nazione coinvolta e dei consumi, per correggere errori e controllare i costi; non conserva il testo che hai scritto. I fornitori di intelligenza artificiale trattano i dati secondo le loro condizioni per il servizio.</p>
+
+<h2>Funzione in rete 2: la partita con un amico</h2>
+<p>Se scegli di giocare con un amico, il gioco crea sul telefono un codice casuale che distingue il tuo telefono nella partita, e manda al nostro server questo codice, il nome del tuo Sovrano (quello che scegli nel profilo, visibile al tuo amico) e le mosse che fai. Il server tiene il mondo condiviso e lo salva finché la stanza esiste. Il codice non è collegato alla tua identità, al tuo account Google o al numero del telefono.</p>
+
+<h2>Perché trattiamo questi dati</h2>
+<p>Solo per far funzionare le funzioni che hai scelto di usare (base giuridica: l'esecuzione del servizio che hai richiesto). Non li usiamo per profilarti, per pubblicità o per altro.</p>
+
+<h2>Sicurezza</h2>
+<p>Tutto quello che esce dal telefono viaggia cifrato (HTTPS).</p>
+
+<h2>I tuoi diritti</h2>
+<p>Puoi chiedere in ogni momento di sapere quali dati ti riguardano, di correggerli o di cancellarli, scrivendo a <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Poiché non abbiamo account, per aiutarci a trovarli indicaci la data e, se l'hai, il codice della stanza. Puoi anche rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
+
+<h2>Minori</h2>
+<p>Sovrano non è pensato per bambini sotto i 13 anni e non raccoglie consapevolmente dati che li riguardano.</p>
+
+<h2>Modifiche</h2>
+<p>Se il gioco cambia il modo in cui tratta i dati, questa pagina viene aggiornata prima della nuova versione, con la data in cima.</p>
+
+<hr>
+
+<section id="en" lang="en">
+<header>
+  <p class="marchio">Sovrano</p>
+  <h1>Privacy policy</h1>
+  <p class="data">Last updated: 22 September 2026</p>
+</header>
+
+<div class="riquadro">
+  <p><strong>In short.</strong> Sovrano has no accounts, no ads and no analytics, and your game stays on your phone. Data leaves the phone only if you use one of the two online features described below, and only what they need to work.</p>
+</div>
+
+<h2>Who is responsible</h2>
+<p>Sovrano is developed by Giorgio Cristea, who publishes it as Qublo and is the controller of the data described on this page. For any question or request write to <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>.</p>
+
+<h2>What the game does not do</h2>
+<ul>
+  <li>No sign-up and no accounts.</li>
+  <li>No advertising, no third-party analytics or tracking tools.</li>
+  <li>No access to location, contacts, camera, microphone or files. The only Android permission is Internet access, used only by the two online features.</li>
+  <li>We never sell or hand over data to anyone.</li>
+</ul>
+
+<h2>Your saved game</h2>
+<p>The game saves automatically in your phone's storage (or your browser's, on the web). It is never sent to us. Uninstalling the game, or clearing the browser's data, deletes it.</p>
+
+<!-- DA ACCENDERE CON GLI ACQUISTI (dopo il primo rilascio, RILASCIO.md 0.6): togliere il commento
+<h2>In-game purchases</h2>
+<p>The whole game is free. Inside the app you can buy extra content through Google Play (scenarios, styles, your own nation, the Adviser, the large room) and packs of letters to write to nations with artificial intelligence. Google handles the payment: your card, account and billing details are processed by Google under its own privacy policy and never reach us. On the phone the game keeps which content you bought and the order number Google returns, so it can recognise it offline.</p>
+<p>For letters only, the game sends our server the purchase token Google returns and a random code created on the phone, not linked to your identity: the server checks with Google that the purchase is paid and keeps count of the letters you have left, tied to that code. If you change phone or uninstall the game the code is lost: write to us with your Google order number and we will give back the letters you had not used.</p>
+-->
+
+<!-- DA ACCENDERE COL VIDEO A PREMIO (dopo il primo rilascio, RILASCIO.md 0.6): togliere il commento
+     and replace the current sentences with:
+     In short: «Sovrano has no accounts or analytics tools, and your game stays on your phone. The only advertising is a video you can choose to watch when you lose, to get another chance. Something leaves the phone only if you use one of the online features described below, and only what they need to work.»
+     First item: «No advertising unless you ask for it: no banners and no videos that start by themselves. No analytics tools.»
+     Second item: «No access to location, contacts, camera, microphone or files. The Android permissions are the Internet connection and the advertising ID, used by Google only for rewarded videos.»
+<h2>Rewarded videos</h2>
+<p>When you lose a match (an election, a revolution, a coup) the game may offer you another chance in exchange for watching an ad video, at most twice per match. The video only starts if you choose it: there is no advertising at any other point in the game.</p>
+<p>The videos are provided by Google through AdMob. When you watch one, Google's component collects from the phone the advertising ID, device information, the IP address (from which it derives an approximate location) and how you interact with the video, to show it, measure it and prevent fraud, under its own policy (<a href="https://policies.google.com/technologies/partner-sites">policies.google.com/technologies/partner-sites</a>). None of this data reaches us: Google only tells us how many videos were watched.</p>
+<p>In the European Economic Area, the United Kingdom and Switzerland, the first time you choose a video Google asks for your consent with its own form. If you decline you see non-personalised videos, and the other chance stays. You can change your choice at any time from the «Advertising choices» row in the game menu, and reset the advertising ID in Android settings. For this data the legal basis is your consent, where the law requires it.</p>
+-->
+
+<h2>If you play in the browser</h2>
+<p>The web version is the same game page, hosted by the site you open it from (for example itch.io, which has its own privacy policy). The page loads its typefaces from Google Fonts, which, as with any website, receives your device's IP address. The Android app has its typefaces built in and connects to no one.</p>
+
+<h2>Online feature 1: the Embassy voice</h2>
+<p>It is off until you turn it on from the game menu. Without it, nations still answer with sentences the game composes offline.</p>
+<p>If you turn it on, when you write your own message to a nation the game sends our server your message, the conversation so far and a description of the game situation (the nation, its figures, your relations). The server forwards this to an AI service that writes the reply: currently fal.ai, using an Anthropic language model through OpenRouter. No name, phone identifier or account identifier is sent.</p>
+<p>Our server keeps a log of the generated replies, the nation involved and usage figures, to fix errors and control costs; it does not keep the text you wrote. The AI providers process the data under their own service terms.</p>
+
+<h2>Online feature 2: playing with a friend</h2>
+<p>If you play with a friend, the game creates a random code on your phone that identifies your phone within the match, and sends our server that code, your ruler's name (the one you choose in your profile, visible to your friend) and your moves. The server runs the shared world and saves it while the room exists. The code is not linked to your identity, your Google account or your phone number.</p>
+
+<h2>Why we process this data</h2>
+<p>Only to provide the features you chose to use (legal basis: performance of the service you requested). We do not use it for profiling, advertising or anything else.</p>
+
+<h2>Security</h2>
+<p>Everything that leaves the phone is encrypted in transit (HTTPS).</p>
+
+<h2>Your rights</h2>
+<p>You can ask at any time to know which data concerns you, to correct it or to delete it, by writing to <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Since there are no accounts, tell us the date and, if you have one, the room code so we can find it. You may also lodge a complaint with the Italian data protection authority (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
+
+<h2>Children</h2>
+<p>Sovrano is not directed at children under 13 and does not knowingly collect data about them.</p>
+
+<h2>Changes</h2>
+<p>If the game changes how it handles data, this page is updated before the new version ships, with the date at the top.</p>
+</section>
+
+<footer><p>Sovrano · Qublo · Giorgio Cristea</p></footer>
+</main>
+</body>
+</html>
