@@ -17,13 +17,22 @@
   Ogni frase e' letta nel codice il 22 settembre 2026:
   - salvataggio solo sul telefono: src/js/04-state.js (localStorage);
   - Ambasciata con la rete SPENTA di default: src/js/63-rete.js (VOCE_RETE.attiva=false);
+    manda anche la lingua e il codice casuale sovranoDispositivo (per il tetto del giorno);
     il servizio di mezzo tools/voce-proxy.mjs manda il testo a fal.ai (openrouter/router,
-    modello anthropic/claude-haiku-4.5) e registra in voce-log.jsonl la RISPOSTA, la
-    nazione e i consumi, non il testo del giocatore;
+    modello deepseek/deepseek-v4.1-flash) e registra in voce-log.jsonl la RISPOSTA, la
+    nazione, la lingua, il codice e i consumi, non il testo del giocatore;
+  - la Nota (dalla base del PC del 22 set): src/js/76-nota.js notaComponi manda a
+    /filo/nota tipo, testo (400 caratteri), schermata, tocchi, giorno, nazione, velocita',
+    formato, versione, lingua, indirizzo della pagina e il codice sovrano-note-chi;
+    server/sovrano-server.mjs la scrive in un JSONL, senza IP;
   - «Con un amico»: src/js/68-ponte.js (codice casuale di 16 cifre esadecimali e il nome
     del Sovrano), server/ (la stanza si salva su disco finche' esiste);
-  - nessuna pubblicita', nessuna analitica, nessun SDK di terzi, nessun permesso Android
-    oltre a Internet. Acquisti (src/js/74-acquisti.js) e video a premio (src/js/75-video.js)
+  - notifiche (23 set): @capacitor/local-notifications, programmate SUL telefono da
+    src/js/15-telefono.js e src/js/75-notifiche.js, niente server; permessi POST_NOTIFICATIONS
+    (chiesto solo quando si accendono), RECEIVE_BOOT_COMPLETED e WAKE_LOCK; SCHEDULE_EXACT_ALARM
+    tolto da tools/patch-android.mjs;
+  - nessuna pubblicita', nessuna analitica, nessun SDK di terzi, nessun altro permesso Android
+    oltre a Internet e alle notifiche. Acquisti (src/js/74-acquisti.js) e video a premio (src/js/75-video.js)
     sono spenti al primo rilascio e il loro codice di Google non e' nel pacchetto.
   QUANDO SI ACCENDONO (RILASCIO.md 0.6):
   - acquisti: togliere il commento alla sezione «acquisti» (italiano e inglese). Le lettere
@@ -87,7 +96,7 @@
 </header>
 
 <div class="riquadro">
-  <p><strong>In breve.</strong> Sovrano non ha account, pubblicità né strumenti di analisi, e la partita resta sul tuo telefono. Qualcosa esce dal telefono solo se usi una delle due funzioni in rete descritte qui sotto, e solo quello che serve a farle funzionare.</p>
+  <p><strong>In breve.</strong> Sovrano non ha account, pubblicità né strumenti di analisi, e la partita resta sul tuo telefono. Qualcosa esce dal telefono solo se usi una delle funzioni in rete descritte qui sotto (le note, la voce dell'Ambasciata, la partita con un amico), e solo quello che serve a farle funzionare.</p>
 </div>
 
 <h2>Chi è il titolare</h2>
@@ -97,7 +106,7 @@
 <ul>
   <li>Non chiede di registrarti e non ha account.</li>
   <li>Non mostra pubblicità e non contiene strumenti di analisi o di tracciamento di terze parti.</li>
-  <li>Non chiede accesso a posizione, contatti, fotocamera, microfono o file. L'unico permesso Android è la connessione a Internet, che serve solo alle due funzioni in rete.</li>
+  <li>Non chiede accesso a posizione, contatti, fotocamera, microfono o file. I permessi Android sono la connessione a Internet, che serve solo alle funzioni in rete, e quelli delle notifiche: il permesso di mostrarle il gioco lo chiede solo se le accendi dal menu, e servono a ricordarti una lettera che aspetta risposta o una partita lasciata a metà. Le notifiche si preparano sul telefono e non passano da nessun server; con loro vengono due permessi che Android concede da sé, per tenere il promemoria anche dopo un riavvio.</li>
   <li>Non vende né cede dati a nessuno.</li>
 </ul>
 
@@ -124,22 +133,26 @@
 <h2>Se giochi dal browser</h2>
 <p>La versione web è la stessa pagina del gioco, ospitata dal sito da cui la apri (per esempio itch.io, che ha una sua informativa). Per i caratteri tipografici la pagina si collega a Google Fonts, che come per qualunque sito riceve l'indirizzo IP del tuo dispositivo. L'app per Android ha i caratteri dentro e non si collega a nessuno.</p>
 
-<h2>Funzione in rete 1: la voce dell'Ambasciata</h2>
-<p>È spenta finché non la accendi tu dal menu del gioco. Senza di lei le nazioni rispondono comunque, con frasi che il gioco compone da sé senza rete.</p>
-<p>Se la accendi, quando scrivi di tuo pugno a una nazione il gioco manda al nostro server il tuo messaggio, la conversazione in corso e una descrizione della situazione della partita (la nazione, i suoi numeri, i rapporti fra voi). Il server gira questi dati a un servizio di intelligenza artificiale che compone la risposta: oggi fal.ai, che usa un modello linguistico di Anthropic tramite OpenRouter. Non viene inviato nessun tuo nome, identificativo del telefono o dell'account.</p>
-<p>Il nostro server conserva un registro delle risposte generate, della nazione coinvolta e dei consumi, per correggere errori e controllare i costi; non conserva il testo che hai scritto. I fornitori di intelligenza artificiale trattano i dati secondo le loro condizioni per il servizio.</p>
+<h2>Funzione in rete 1: le note che ci mandi</h2>
+<p>Nel gioco c'è un bottone «Nota», sul bordo dello schermo, per dirci che cosa non va. Non parte niente finché non scrivi una nota e la mandi. Con la nota arrivano al nostro server: il giudizio che hai scelto e il testo che hai scritto (al massimo 400 caratteri); la schermata in cui eri e le ultime cinque cose che avevi toccato (il nome dei bottoni); il giorno di gioco, la nazione che governi, la velocità del tempo, se stavi giocando con un amico, la versione del gioco, la lingua, la misura dello schermo e l'indirizzo della pagina del gioco; un codice casuale creato sul telefono. Nessuna foto o immagine dello schermo. Se non c'è rete, la nota aspetta sul telefono e parte appena può.</p>
+<p>Dove finisce: in un file sul nostro server in Europa (OVH, Francia), con l'ora di arrivo e senza il tuo indirizzo IP. La leggono solo gli sviluppatori del gioco, per correggerlo; non la diamo a nessun altro e non passa da servizi di terzi. Il codice casuale serve solo alle risposte: dopo che hai mandato almeno una nota, mentre giochi il telefono chiede al server ogni tre minuti, con quel codice, com'è andata alle tue note, e le risposte le vedi in «Le tue note», dove trovi anche il codice. Le note restano sul server finché servono alla storia delle correzioni; per cancellarle scrivi all'indirizzo qui sotto indicando quel codice. Non contengono niente che permetta di risalire a te, a meno che tu non lo scriva nel testo.</p>
 
-<h2>Funzione in rete 2: la partita con un amico</h2>
+<h2>Funzione in rete 2: la voce dell'Ambasciata</h2>
+<p>È spenta finché non la accendi tu dal menu del gioco. Senza di lei le nazioni rispondono comunque, con frasi che il gioco compone da sé senza rete.</p>
+<p>Se la accendi, quando scrivi di tuo pugno a una nazione il gioco manda al nostro server il tuo messaggio, la conversazione in corso e una descrizione della situazione della partita (la nazione, i suoi numeri, i rapporti fra voi). Il server gira questi dati a un servizio di intelligenza artificiale che compone la risposta: oggi fal.ai, che usa un modello linguistico di DeepSeek tramite OpenRouter. Con il messaggio vanno la lingua del gioco e un codice casuale creato sul telefono, che serve solo a contare i messaggi del giorno. Non viene inviato nessun tuo nome, né l'identificativo del telefono o dell'account.</p>
+<p>Il nostro server conserva un registro delle risposte generate, della nazione coinvolta, della lingua, di quel codice e dei consumi, per correggere errori e controllare i costi; non conserva il testo che hai scritto. I fornitori di intelligenza artificiale trattano i dati secondo le loro condizioni per il servizio.</p>
+
+<h2>Funzione in rete 3: la partita con un amico</h2>
 <p>Se scegli di giocare con un amico, il gioco crea sul telefono un codice casuale che distingue il tuo telefono nella partita, e manda al nostro server questo codice, il nome del tuo Sovrano (quello che scegli nel profilo, visibile al tuo amico) e le mosse che fai. Il server tiene il mondo condiviso e lo salva finché la stanza esiste. Il codice non è collegato alla tua identità, al tuo account Google o al numero del telefono.</p>
 
 <h2>Perché trattiamo questi dati</h2>
 <p>Solo per far funzionare le funzioni che hai scelto di usare (base giuridica: l'esecuzione del servizio che hai richiesto). Non li usiamo per profilarti, per pubblicità o per altro.</p>
 
 <h2>Sicurezza</h2>
-<p>Tutto quello che esce dal telefono viaggia cifrato (HTTPS).</p>
+<p>Tutto quello che esce dal telefono viaggia cifrato (HTTPS). Il nostro server è in Europa (OVH, Francia).</p>
 
 <h2>I tuoi diritti</h2>
-<p>Puoi chiedere in ogni momento di sapere quali dati ti riguardano, di correggerli o di cancellarli, scrivendo a <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Poiché non abbiamo account, per aiutarci a trovarli indicaci la data e, se l'hai, il codice della stanza. Puoi anche rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
+<p>Puoi chiedere in ogni momento di sapere quali dati ti riguardano, di correggerli o di cancellarli, scrivendo a <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Poiché non abbiamo account, per aiutarci a trovarli indicaci la data e, se li hai, il codice della stanza o il codice del telefono che trovi nel gioco sotto «Le tue note». Puoi anche rivolgerti al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
 
 <h2>Minori</h2>
 <p>Sovrano non è pensato per bambini sotto i 13 anni e non raccoglie consapevolmente dati che li riguardano.</p>
@@ -157,7 +170,7 @@
 </header>
 
 <div class="riquadro">
-  <p><strong>In short.</strong> Sovrano has no accounts, no ads and no analytics, and your game stays on your phone. Data leaves the phone only if you use one of the two online features described below, and only what they need to work.</p>
+  <p><strong>In short.</strong> Sovrano has no accounts, no ads and no analytics, and your game stays on your phone. Data leaves the phone only if you use one of the online features described below (notes, the Embassy voice, playing with a friend), and only what they need to work.</p>
 </div>
 
 <h2>Who is responsible</h2>
@@ -167,7 +180,7 @@
 <ul>
   <li>No sign-up and no accounts.</li>
   <li>No advertising, no third-party analytics or tracking tools.</li>
-  <li>No access to location, contacts, camera, microphone or files. The only Android permission is Internet access, used only by the two online features.</li>
+  <li>No access to location, contacts, camera, microphone or files. The Android permissions are Internet access, used only by the online features, and those for notifications: the game asks to show them only if you turn them on from the menu, and they remind you of a letter waiting for an answer or a game left halfway. Notifications are prepared on the phone and go through no server; with them come two permissions Android grants by itself, to keep the reminder after a restart.</li>
   <li>We never sell or hand over data to anyone.</li>
 </ul>
 
@@ -194,22 +207,26 @@
 <h2>If you play in the browser</h2>
 <p>The web version is the same game page, hosted by the site you open it from (for example itch.io, which has its own privacy policy). The page loads its typefaces from Google Fonts, which, as with any website, receives your device's IP address. The Android app has its typefaces built in and connects to no one.</p>
 
-<h2>Online feature 1: the Embassy voice</h2>
-<p>It is off until you turn it on from the game menu. Without it, nations still answer with sentences the game composes offline.</p>
-<p>If you turn it on, when you write your own message to a nation the game sends our server your message, the conversation so far and a description of the game situation (the nation, its figures, your relations). The server forwards this to an AI service that writes the reply: currently fal.ai, using an Anthropic language model through OpenRouter. No name, phone identifier or account identifier is sent.</p>
-<p>Our server keeps a log of the generated replies, the nation involved and usage figures, to fix errors and control costs; it does not keep the text you wrote. The AI providers process the data under their own service terms.</p>
+<h2>Online feature 1: the notes you send us</h2>
+<p>The game has a «Note» button, on the edge of the screen, to tell us what is wrong. Nothing is sent until you write a note and send it. With the note our server receives: the rating you chose and the text you wrote (at most 400 characters); the screen you were on and the last five things you touched (the names of the buttons); the game day, the nation you rule, the game speed, whether you were playing with a friend, the game version, the language, the screen size and the address of the game page; a random code created on your phone. No photos or screenshots. Without a connection, the note waits on the phone and is sent as soon as possible.</p>
+<p>Where it ends up: in a file on our server in Europe (OVH, France), with the time it arrived and without your IP address. Only the game's developers read it, to fix the game; we give it to no one else and it goes through no third-party service. The random code is used only for replies: once you have sent at least one note, while you play the phone asks the server every three minutes, with that code, what happened to your notes, and you see the replies under «Your notes», where the code is shown too. Notes stay on the server as long as they are needed for the history of fixes; to delete them, write to the address below with that code. They contain nothing that can identify you, unless you write it in the text.</p>
 
-<h2>Online feature 2: playing with a friend</h2>
+<h2>Online feature 2: the Embassy voice</h2>
+<p>It is off until you turn it on from the game menu. Without it, nations still answer with sentences the game composes offline.</p>
+<p>If you turn it on, when you write your own message to a nation the game sends our server your message, the conversation so far and a description of the game situation (the nation, its figures, your relations). The server forwards this to an AI service that writes the reply: currently fal.ai, using a DeepSeek language model through OpenRouter. The message carries the game language and a random code created on the phone, used only to count the day's messages. No name, phone identifier or account identifier is sent.</p>
+<p>Our server keeps a log of the generated replies, the nation involved, the language, that code and usage figures, to fix errors and control costs; it does not keep the text you wrote. The AI providers process the data under their own service terms.</p>
+
+<h2>Online feature 3: playing with a friend</h2>
 <p>If you play with a friend, the game creates a random code on your phone that identifies your phone within the match, and sends our server that code, your ruler's name (the one you choose in your profile, visible to your friend) and your moves. The server runs the shared world and saves it while the room exists. The code is not linked to your identity, your Google account or your phone number.</p>
 
 <h2>Why we process this data</h2>
 <p>Only to provide the features you chose to use (legal basis: performance of the service you requested). We do not use it for profiling, advertising or anything else.</p>
 
 <h2>Security</h2>
-<p>Everything that leaves the phone is encrypted in transit (HTTPS).</p>
+<p>Everything that leaves the phone is encrypted in transit (HTTPS). Our server is in Europe (OVH, France).</p>
 
 <h2>Your rights</h2>
-<p>You can ask at any time to know which data concerns you, to correct it or to delete it, by writing to <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Since there are no accounts, tell us the date and, if you have one, the room code so we can find it. You may also lodge a complaint with the Italian data protection authority (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
+<p>You can ask at any time to know which data concerns you, to correct it or to delete it, by writing to <a href="mailto:giorgiocreazione@gmail.com">giorgiocreazione@gmail.com</a>. Since there are no accounts, tell us the date and, if you have them, the room code or the phone code shown in the game under «Your notes» so we can find it. You may also lodge a complaint with the Italian data protection authority (<a href="https://www.garanteprivacy.it">garanteprivacy.it</a>).</p>
 
 <h2>Children</h2>
 <p>Sovrano is not directed at children under 13 and does not knowingly collect data about them.</p>
